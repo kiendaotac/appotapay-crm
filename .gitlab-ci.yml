@@ -1,0 +1,186 @@
+# Gitlab CI configuration file
+
+image: docker.appota.com/kdata-research/alpine-bash
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  HELM_RELEASE: ${CI_ENVIRONMENT_NAME}-${SERVICE_NAME}
+  MYSQL_ROOT_PASSWORD: secret
+  MYSQL_DATABASE: appota_pay_crm_test
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  untracked: true
+  paths:
+    - src/vendor
+
+stages:
+  - test 
+  - build
+  - dockerize
+  - deploy
+  - restart
+
+
+Test_prod:
+  image: docker.appota.com/kdata-research/nginx-php-fpm:7.4-alpine
+  only:
+    - master
+  cache: 
+    key: ${CI_PROJECT_URL}
+    paths:
+      - src/vendor/    
+  tags:
+    - kubernetes
+    - develop
+    - appotapay
+  services:
+    - mariadb:10.5.9-focal
+    - redis
+  stage: test
+  script:
+    - cd src && cp .env.example .env
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer 
+    - composer install 
+    - php artisan key:generate 
+    - unset REDIS_PORT
+    - php artisan test 
+#
+# Dockerize image
+#
+dockerize_dev:
+  environment:
+    name: development
+  stage: dockerize
+  only:
+    - develop
+  tags:
+    - kubernetes
+    - develop
+    - appotapay
+  script:
+    - export ELK_INDEX=${DEV_ELK_INDEX}
+    - bash ci_cd/filebeat.sh
+    - docker login -u deploy -p "$DEPLOY_TOKEN" $CI_REGISTRY
+    - echo "$(date) $CI_COMMIT_SHA" > src/public/nfo.txt
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+# 
+# DEPLOY Kubernetes
+# 
+deploy_dev:
+  image: docker.appota.com/kdata-research/alpine-bash:kubernetes
+  environment: 
+    name: development
+  stage: deploy
+  only:
+    - develop
+  tags:
+    - kubernetes
+    - develop
+    - appotapay
+  script:
+    - export VAULT_PATH_SECRET=${DEV_VAULT_PATH_SECRET}
+    - bash ci_cd/k8s_deploy.sh dev-appotapay
+  when: on_success
+
+#
+# Build production
+# If you use multiple host, just copy this job to new job, replace the index 0 with your new index, or sv name
+#
+predeploy_prod_0:
+  environment:
+    name:  production
+  stage: build
+  only: 
+    - master
+  tags:
+    - docker
+    - production
+    - crm.appotapay.com
+  script:
+    - export DEPLOY_HOST_PROD=($DEPLOY_HOST_PROD)
+    # Check if environment variable has been set
+    - DEPLOY_HOST_PROD=${DEPLOY_HOST_PROD[0]}
+    - if [[ -z "$DEPLOY_HOST_PROD" || -z "$PROJECT_LOCATION_PROD" || -z "$DEPLOY_PORT_PROD" ]]; then echo "Need to set variables"; exit 1; fi
+    - bash ci_cd/runner.predeploy.sh "$DEPLOY_HOST_PROD" "$DEPLOY_PORT_PROD" "$PROJECT_LOCATION_PROD"
+
+# 
+# DEPLOY production
+# If you use multiple host, just copy this job to new job, replace the index 0 with your new index, or sv name
+# 
+deploy_prod_0:
+  environment:
+    name: production
+  stage: deploy
+  only: 
+    - master
+  tags:
+    - docker
+    - production
+    - crm.appotapay.com
+  script:
+    - export DEPLOY_HOST_PROD=($DEPLOY_HOST_PROD)
+    # Check if environment variable has been set
+    - DEPLOY_HOST_PROD=${DEPLOY_HOST_PROD[0]}
+    - if [[ -z "$DEPLOY_HOST_PROD" || -z "$PROJECT_LOCATION_PROD" || -z "$DEPLOY_PORT_PROD" ]]; then echo "Need to set variables"; exit 1; fi
+    - bash ci_cd/runner.deploy.sh "$DEPLOY_HOST_PROD" "$DEPLOY_PORT_PROD" "$PROJECT_LOCATION_PROD" "$PROD_VAULT_PATH_SECRET"
+
+#
+# Build production
+# If you use multiple host, just copy this job to new job, replace the index 0 with your new index, or sv name
+#
+predeploy_prod_1:
+  environment:
+    name: production
+  stage: build
+  only:
+    - master
+  tags:
+    - docker
+    - production
+    - crm.appotapay.com
+
+  script:
+    - export DEPLOY_HOST_PROD=($DEPLOY_HOST_PROD)
+    # Check if environment variable has been set
+    - DEPLOY_HOST_PROD=${DEPLOY_HOST_PROD[1]}
+    - if [[ -z "$DEPLOY_HOST_PROD" || -z "$PROJECT_LOCATION_PROD" || -z "$DEPLOY_PORT_PROD" ]]; then echo "Need to set variables"; exit 1; fi
+    - bash ci_cd/runner.predeploy.sh "$DEPLOY_HOST_PROD" "$DEPLOY_PORT_PROD" "$PROJECT_LOCATION_PROD" 
+
+#
+# DEPLOY production
+# If you use multiple host, just copy this job to new job, replace the index 0 with your new index, or sv name
+#
+deploy_prod_1:
+  environment: 
+    name: production
+  stage: deploy
+  only:
+    - master
+  tags:
+    - docker
+    - production
+    - crm.appotapay.com
+
+  script:
+    - export DEPLOY_HOST_PROD=($DEPLOY_HOST_PROD)
+    # Check if environment variable has been set
+    - DEPLOY_HOST_PROD=${DEPLOY_HOST_PROD[1]}
+    - if [[ -z "$DEPLOY_HOST_PROD" || -z "$PROJECT_LOCATION_PROD" || -z "$DEPLOY_PORT_PROD" ]]; then echo "Need to set variables"; exit 1; fi
+    - bash ci_cd/runner.deploy.sh "$DEPLOY_HOST_PROD" "$DEPLOY_PORT_PROD" "$PROJECT_LOCATION_PROD" "$PROD_VAULT_PATH_SECRET"
+restart_service_prod_0:
+  environment: production
+  stage: restart 
+  only: 
+    - master
+  tags:
+    - docker
+    - production
+    - crm.appotapay.com
+  script:
+    - export DEPLOY_HOST_PROD=($DEPLOY_HOST_PROD)
+    # Check if environment variable has been set
+    - DEPLOY_HOST_PROD=${DEPLOY_HOST_PROD[0]}
+    - if [[ -z "$DEPLOY_HOST_PROD" || -z "$PROJECT_LOCATION_PROD" || -z "$DEPLOY_PORT_PROD" ]]; then echo "Need to set variables"; exit 1; fi
+    - bash ci_cd/runner.afterdeploy.sh "$DEPLOY_HOST_PROD" "$DEPLOY_PORT_PROD" "$PROJECT_LOCATION_PROD" 
