@@ -13,6 +13,7 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::post('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('get.logout');
     Route::any('adminer', [\Aranyasen\LaravelAdminer\AdminerAutologinController::class, 'index'])->middleware('can:viewAdminer');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('can:viewLogs');
 
@@ -34,7 +35,7 @@ Route::group([
             'prefix' => 'calls',
             'as' => 'calls.'
         ], function () {
-            Route::get('', \App\Http\Livewire\TicketCall\Index::class)->name('index');
+            Route::get('', \App\Http\Livewire\TicketCall\TicketIndex::class)->name('index');
             Route::get('create', \App\Http\Livewire\TicketCall\Create::class)->name('create');
             Route::get('{ticket}/edit', \App\Http\Livewire\TicketCall\Edit::class)->name('edit')->whereNumber('ticket');
         });
@@ -44,7 +45,7 @@ Route::group([
             'prefix' => 'locals',
             'as' => 'locals.'
         ], function () {
-            Route::get('', \App\Http\Livewire\TicketLocal\Index::class)->name('index');
+            Route::get('', \App\Http\Livewire\TicketLocal\TicketIndex::class)->name('index');
             Route::get('create', \App\Http\Livewire\TicketLocal\Create::class)->name('create');
             Route::get('{ticket}/edit', \App\Http\Livewire\TicketLocal\Edit::class)->name('edit')->whereNumber('ticket');
         });

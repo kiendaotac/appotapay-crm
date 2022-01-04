@@ -51,8 +51,8 @@ final class TicketStatusEnum
     ];
 
     const COLOR = [
-        self::MISSED => 'danger',
-        self::ANSWERED => 'success',
+        self::MISSED => 'light-danger',
+        self::ANSWERED => 'light-green',
         self::CLOSED => 'secondary',
         self::FRESH => "warning",
         self::PROCESSING => "info",

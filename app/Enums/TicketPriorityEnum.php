@@ -21,8 +21,8 @@ final class TicketPriorityEnum
     ];
 
     const COLOR = [
-        self::LOW => 'success',
-        self::MEDIUM => 'primary',
-        self::HIGH => 'danger',
+        self::LOW => 'light-green',
+        self::MEDIUM => 'light-primary',
+        self::HIGH => 'light-danger',
     ];
 }
