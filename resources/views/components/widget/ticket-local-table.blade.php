@@ -36,13 +36,7 @@
             @endforeach
         </td>
         <td>
-            <select class="form-control form-sm status-progress" data-bs-toggle="status">
-                @foreach($statuses as $status)
-                <option value="1" data-bs-status="status-progress">{{ $status }}</option>
-                @endforeach
-{{--                <option value="1" data-bs-status="status-done">Hoàn thành</option>--}}
-{{--                <option value="1" data-bs-status="status-progress">Đang xử lý</option>--}}
-            </select>
+            @livewire('ticket-local.ticket-status', ['ticket' => $ticket, 'status' => $ticket->status])
         </td>
         <td>{{ $ticket->created_at->format('d/m/Y H:s:i') }}</td>
 

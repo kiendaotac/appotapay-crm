@@ -32,7 +32,6 @@ class TicketIndex extends Component
 
     public function mount(UserRepository $userRepository, ProductRepository $productRepository)
     {
-        $this->statuses = TicketStatusEnum::GROUP_LOCAL;
         $this->priorities = TicketPriorityEnum::VALUE;
         $this->variants = TicketVariantEnum::GROUP_LOCAL;
         $this->agents = $userRepository->all();
@@ -56,5 +55,10 @@ class TicketIndex extends Component
             ->orderBy('id', 'desc')
             ->paginate($this->perPage);
         return view('livewire.ticket-local.ticket-index', compact('tickets'))->layout('layouts.new');
+    }
+
+    public function updateStatus($ticket)
+    {
+        dd($ticket);
     }
 }
