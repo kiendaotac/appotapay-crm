@@ -347,7 +347,9 @@
 
                     <div class="ticket-item pt-3">
                         <label class="text-gray text-12">Giao cho</label>
-                        <div class="text-600">{{ $ticket->assignees()->pluck('email')->implode(', ') }}</div>
+                        @foreach($ticket->assignees()->pluck('email') as $email)
+                            <div class="text-600">{{ $email }}</div>
+                        @endforeach
                     </div>
 
                     <div class="ticket-item pt-3">

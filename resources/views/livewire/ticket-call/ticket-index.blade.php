@@ -63,3 +63,32 @@
     </div>
 </main>
 <livewire:ticket-call.ticket-show />
+
+@push('js')
+{{--    <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>--}}
+        <script type="text/javascript" src="https://static.stringee.com/web_phone/lastest/js/StringeeSoftPhone-lastest.js"></script>
+    <script src="{{ mix('assets/js/stringee.js') }}"></script>
+    <script>
+        function deleteTicket(id) {
+            swal.fire({
+                title: 'Xác nhận',
+                text: "Bạn chắc chắn muốn xóa ticket này chứ?",
+                type: 'warning',
+                buttonsStyling: false,
+                confirmButtonClass: "btn btn-danger",
+                cancelButtonClass: "btn btn-link",
+                showCancelButton: true,
+                confirmButtonText: 'Xóa!',
+                cancelButtonText: "Hủy"
+            }).then(function(result) {
+                if (result.value) {
+                @this.destroy(id)
+                }
+                swal.close();
+            });
+        }
+
+        Livewire.on('edit-ticket', path => window.open(path))
+
+    </script>
+@endpush

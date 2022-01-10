@@ -1,0 +1,25 @@
+//+++make call callback:
+{
+  "callId": "call-vn-1-J0SG7VDXX4-1641426337187",
+  "fromNumber": "842471099386",
+  "r": 0,
+  "customDataFromYourServer": "",
+  "toType": "external",
+  "requestId": 22,
+  "video": false,
+  "message": "SUCCESS",
+  "toNumber": "84985108032",
+  "peerToPeerCall": false
+},
+//+++make call callback: Dùng key
+{
+  "fromNumber": "842471099386",
+  "r": 11,
+  "customDataFromYourServer": "{\"msg\":\"FROM_NUMBER_NOT_FOUND\"}",
+  "toType": "",
+  "requestId": 2,
+  "video": false,
+  "message": "CALL_NOT_ALLOWED_BY_YOUR_SERVER",
+  "toNumber": "84985108032",
+  "peerToPeerCall": false
+}

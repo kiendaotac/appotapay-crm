@@ -11,6 +11,9 @@
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
     @livewireStyles
+    <link href="{{ mix('assets/css/app.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ mix('assets/js/bootstrap.js') }}" data-turbolinks-eval="false" data-turbo-eval="false" defer>
+    </script>
 </head>
 <body>
 @php
@@ -30,5 +33,12 @@
 <script src="{{ asset('assets/js/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+<script src="{{ mix('assets/js/manifest.js') }}" defer></script>
+<script src="{{ mix('assets/js/vendor.js') }}" defer></script>
+<script src="{{ mix('assets/js/app.js') }}" data-turbolinks-eval="false" data-turbo-eval="false" defer></script>
+@stack('js')
+<script src="{{ mix('assets/js/livewire-turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"
+        defer></script>
 </body>
 </html>

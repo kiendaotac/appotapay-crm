@@ -8,9 +8,10 @@
 
 var callRef = null;
 var FROM_NUMBER = [{
-  alias: 'Number-Incoming',
-  number: '+19006004'
-}];
+  alias: 'Hoàng Kiên Phone',
+  number: '842471099386'
+}]; // window.__user__.stringee_token = 'eyJjdHkiOiJzdHJpbmdlZS1hcGk7dj0xIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJTS2tuT1p6OVgyZ2tKdTZqMjlrWWkwRWptMHp3NHZFbmJ4LTE2NDE1ODAzMTYiLCJpc3MiOiJTS2tuT1p6OVgyZ2tKdTZqMjlrWWkwRWptMHp3NHZFbmJ4IiwiZXhwIjoxNjQ0MTcyMzE2LCJ1c2VySWQiOiIxIn0.EDnJZoXKa7su0HSxd2zDGRSVJ7wKgVlCT59oie5B-jw';
+
 var STATE_CODE = {
   CALLING: 1,
   RINGING: 2,
@@ -140,4 +141,8 @@ StringeeSoftPhone.connect(window.__user__.stringee_token);
 /***/ })
 
 },
-0,[["./resources/js/stringee.js","/assets/js/manifest"]]]);
+/******/ __webpack_require__ => { // webpackRuntimeModules
+/******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+/******/ var __webpack_exports__ = (__webpack_exec__("./resources/js/stringee.js"));
+/******/ }
+]);

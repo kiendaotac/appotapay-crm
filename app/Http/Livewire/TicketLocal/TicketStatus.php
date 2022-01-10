@@ -10,6 +10,7 @@ class TicketStatus extends Component
 {
     public Ticket $ticket;
     public string $status;
+    public string $currentStatus;
     public array $statuses;
 
     public function mount()
@@ -18,7 +19,7 @@ class TicketStatus extends Component
         $this->status = $this->ticket->status;
     }
 
-    public function updateStatus()
+    public function updatedStatus()
     {
         $this->ticket->update(['status' => $this->status]);
     }

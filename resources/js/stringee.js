@@ -1,5 +1,6 @@
 let callRef = null;
-const FROM_NUMBER = [{ alias: 'Number-Incoming', number: '+19006004' }];
+const FROM_NUMBER = [{ alias: 'Hoàng Kiên Phone', number: '842471099386' }];
+// window.__user__.stringee_token = 'eyJjdHkiOiJzdHJpbmdlZS1hcGk7dj0xIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJTS2tuT1p6OVgyZ2tKdTZqMjlrWWkwRWptMHp3NHZFbmJ4LTE2NDE1ODAzMTYiLCJpc3MiOiJTS2tuT1p6OVgyZ2tKdTZqMjlrWWkwRWptMHp3NHZFbmJ4IiwiZXhwIjoxNjQ0MTcyMzE2LCJ1c2VySWQiOiIxIn0.EDnJZoXKa7su0HSxd2zDGRSVJ7wKgVlCT59oie5B-jw';
 const STATE_CODE = {
     CALLING: 1,
     RINGING: 2,

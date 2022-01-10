@@ -22,7 +22,6 @@ class TicketShow extends Component
 
     public function show($ticketId, TicketLocalService $ticketLocalService)
     {
-        dd($ticketId);
         $this->ticket = $ticketLocalService->find($ticketId);
         $this->activities = optional($this->ticket)->activities()->with(['causer'])->latest('id')->limit(10)->get();
     }

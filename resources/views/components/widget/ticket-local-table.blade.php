@@ -36,7 +36,7 @@
             @endforeach
         </td>
         <td>
-            @livewire('ticket-local.ticket-status', ['ticket' => $ticket, 'status' => $ticket->status])
+            @livewire('ticket-local.ticket-status', ['ticket' => $ticket, 'currentStatus' => $ticket->status])
         </td>
         <td>{{ $ticket->created_at->format('d/m/Y H:s:i') }}</td>
 

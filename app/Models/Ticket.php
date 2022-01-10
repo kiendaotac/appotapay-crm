@@ -117,7 +117,9 @@ class Ticket extends Model
             'detail' => $detail,
             'causer' => $activity->causer_id ? $activity->causer()->first()->email : null,
         ];
-        event(new \App\Events\TicketActive($activityEvent, $this));
+        if (!app()->environment('local')) {
+            event(new \App\Events\TicketActive($activityEvent, $this));
+        }
     }
 
     protected $casts = [
