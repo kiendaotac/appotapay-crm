@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7c6d701fc9aa71a10d41dbb7a96e5fb",
+    "content-hash": "308aefed36d76b074656800b96451ba5",
     "packages": [
         {
             "name": "aranyasen/laravel-adminer",
@@ -12063,6 +12063,83 @@
             "time": "2021-01-24T12:00:00+00:00"
         },
         {
+            "name": "kiendaotac/laravel-docker",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kiendaotac/laravel-docker.git",
+                "reference": "7245c98537f35560a7dffcc5899e8c7e3879b53e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kiendaotac/laravel-docker/zipball/7245c98537f35560a7dffcc5899e8c7e3879b53e",
+                "reference": "7245c98537f35560a7dffcc5899e8c7e3879b53e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0|^7.4",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.10",
+                "nunomaduro/larastan": "^1.0",
+                "orchestra/testbench": "^6.22",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kiendaotac\\LaravelDocker\\LaravelDockerServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelDocker": "Kiendaotac\\LaravelDocker\\Facades\\LaravelDocker"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kiendaotac\\LaravelDocker\\": "src",
+                    "Kiendaotac\\LaravelDocker\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hoàng Văn Kiên",
+                    "email": "kiendaotac92@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Initialize simple docker development environment for Laravel",
+            "homepage": "https://github.com/kiendaotac/laravel-docker",
+            "keywords": [
+                "kiendaotac",
+                "laravel",
+                "laravel-docker"
+            ],
+            "support": {
+                "issues": "https://github.com/kiendaotac/laravel-docker/issues",
+                "source": "https://github.com/kiendaotac/laravel-docker/tree/v1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kiendaotac",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-10T09:48:29+00:00"
+        },
+        {
             "name": "laravel/sail",
             "version": "v0.0.5",
             "source": {
@@ -13989,6 +14066,66 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0|^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.23",
+                "phpunit/phpunit": "^9.4",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src",
+                    "Spatie\\LaravelPackageTools\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.10.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-18T20:33:51+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.2.0",
             "source": {
@@ -14048,5 +14185,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

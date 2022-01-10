@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+  web:
+    image: nginx:stable-alpine
+    depends_on:
+      - php
+      - db
+    container_name: laravel-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/config:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx/
+    networks:
+      - laravel
+  php:
+    build:
+      args:
+        user: laravel
+        uid: 1000
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-php
+    image: laravel-docker-php
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel
+
+  db:
+    image: mysql:latest
+    container_name: laravel-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+    environment:
+      MYSQL_DATABASE: crm
+      MYSQL_ROOT_PASSWORD: crm
+      MYSQL_PASSWORD: crm
+      MYSQL_USER: crm
+#      MYSQL_DATABASE: ${DB_DATABASE}
+#      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#      MYSQL_PASSWORD: ${DB_PASSWORD}
+#      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+#      - ./docker/mysql/database:/var/lib/mysql
+      - ./docker/mysql/data:/docker-entrypoint-initdb.d
+      - ./:/var/www
+
+networks:
+  laravel:
+    driver: bridge

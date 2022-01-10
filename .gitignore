@@ -21,3 +21,4 @@ package-lock.json
 composer.lock
 docker-compose.yml
 docker-compose
+composer.lock
