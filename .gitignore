@@ -19,5 +19,5 @@ supervisord.pid
 .idea
 package-lock.json
 composer.lock
-dev.docker-compose.yml
+docker-compose.yml
 docker-compose
