@@ -37,6 +37,8 @@
     <script src="{{ mix('assets/js/manifest.js') }}" defer></script>
     <script src="{{ mix('assets/js/vendor.js') }}" defer></script>
     <script src="{{ mix('assets/js/app.js') }}" data-turbolinks-eval="false" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="https://static.stringee.com/web_phone/lastest/js/StringeeSoftPhone-lastest.js"></script>
+    <script src="{{ mix('assets/js/stringee.js') }}"></script>
     @stack('js')
     <script src="{{ mix('assets/js/livewire-turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"
         defer></script>

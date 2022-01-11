@@ -65,9 +65,6 @@
 <livewire:ticket-call.ticket-show />
 
 @push('js')
-{{--    <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>--}}
-        <script type="text/javascript" src="https://static.stringee.com/web_phone/lastest/js/StringeeSoftPhone-lastest.js"></script>
-    <script src="{{ mix('assets/js/stringee.js') }}"></script>
     <script>
         function deleteTicket(id) {
             swal.fire({
